@@ -1,3 +1,4 @@
-const todoFactory = (title, description, dueDate, priority) => {
-    return { title, description, dueDate, priority };
-};
+import { TodoItemModel } from "./todo-items";
+import { ProjectModel } from "./projects";
+
+const defaultProject = ProjectModel.createProject('Default', 'Default project');

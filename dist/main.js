@@ -1,0 +1,1 @@
+(()=>{"use strict";(()=>{const t=[];return{createProject:(e,o)=>{const r=((t,e)=>{const o=[];return{title:t,description:e,addTodo:t=>{o.push(t)},removeTodo:t=>{const e=o.indexOf(t);o.splice(e,1)},getTodoList:()=>o}})(e,o);return t.push(r),r},removeProject:e=>{const o=t.indexOf(e);t.splice(o,1)},getProjectList:()=>todoList}})().createProject("Default","Default project")})();
