@@ -1,14 +1,17 @@
 import { Todo } from "./todo";
 
 class Project {
-    constructor() {
+    constructor(id, title, description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
         this.todos = [];
     }
 
     addTodo(title, description, dueDate, priority) {
-        const id = this.todos.length > 0 ? this.todos[this.todos.length - 1].id + 1: 1;
+        const todoId = this.todos.length > 0 ? this.todos[this.todos.length - 1].id + 1: 1;
         const newTodo = new Todo(
-            id,
+            todoId,
             title, 
             description, 
             dueDate, 
@@ -17,19 +20,19 @@ class Project {
         this.todos.push(newTodo);
     }
 
-    deleteTodo(id) {
-        this.todos = this.todos.filter(todo => todo.id !== id);
+    deleteTodo(todoId) {
+        this.todos = this.todos.filter(todo => todo.id !== todoId);
     }
 
-    editTodo(id, title, description, dueDate, priority) {
+    editTodo(todoId, title, description, dueDate, priority) {
         this.todos = this.todos.map(todo => 
-            todo.id === id ? new Todo(id, title, description, dueDate, priority) : todo
+            todo.id === todoId ? new Todo(todoId, title, description, dueDate, priority) : todo
         );
     }
 
-    toggleTodo(id) {
+    toggleTodo(todoId) {
         this.todos = this.todos.map(todo => 
-            todo.id === id ? todo.toggleTodo : todo
+            todo.id === todoId ? todo.toggleComplete() : todo
         );
     }
 }
