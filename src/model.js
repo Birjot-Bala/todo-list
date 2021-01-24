@@ -20,4 +20,19 @@ class Model {
             project.id === projectId ? new Project(projectId, title, description) : project
         );
     }
+
+    addTodoToProject(projectId, title, description, dueDate, priority) {
+        const project = this.projects.filter(project => project.id === projectId);
+        project.addTodo(title, description, dueDate, priority);
+    }
+
+    editTodoInProject(projectId, todoId, title, description, dueDate, priority) {
+        const project = this.projects.filter(project => project.id === projectId);
+        project.editTodo(todoId, title, description, dueDate, priority);
+    }
+
+    deleteTodoInProject(projectId, todoId) {
+        const project = this.projects.filter(project => project.id === projectId);
+        project.deleteTodo(todoId);
+    }
 }
