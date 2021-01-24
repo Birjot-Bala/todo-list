@@ -8,16 +8,22 @@ class View {
 
         this.projectsDiv = this.createElement('div', 'projects');
         this.projectsDiv.textContent = 'Projects'
+        this.addProjectButton = this.createElement('button', 'add-button');
+        this.addProjectButton.textContent = 'Add';
         this.projectList = this.createElement('ul')
         this.displayProjects([]);
 
         this.todosDiv = this.createElement('div', 'todos');
         this.todosDiv.textContent = 'Todos';
+        this.addTodoButton = this.createElement('button', 'add-button');
+        this.addTodoButton.textContent = 'Add';
         this.todosList = this.createElement('ol');
         this.displayTodos([]);
 
         this.content.appendChild(this.title);
+        this.projectsDiv.appendChild(this.addProjectButton);
         this.projectsDiv.appendChild(this.projectList);
+        this.todosDiv.appendChild(this.addTodoButton);
         this.todosDiv.appendChild(this.todosList);
         this.content.appendChild(this.projectsDiv);
         this.content.appendChild(this.todosDiv);
