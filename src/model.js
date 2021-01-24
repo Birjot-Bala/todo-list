@@ -35,4 +35,13 @@ class Model {
         const project = this.projects.filter(project => project.id === projectId);
         project.deleteTodo(todoId);
     }
+
+    toggleTodoInProject(projectId, todoId) {
+        const project = this.projects.filter(project => project.id === projectId);
+        project.toggleTodo(todoId);
+    }
+}
+
+export {
+    Model,
 }

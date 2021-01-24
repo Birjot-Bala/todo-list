@@ -1,5 +1,6 @@
-import { View } from "./view";
+import { Controller } from "./controller";
+import { Model } from "./model";
 import "./style.css";
+import { View } from "./view";
 
-const view = new View(document);
-// view.render();
+const app = Controller(new Model(), new View(document));
