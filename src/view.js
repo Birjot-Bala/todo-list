@@ -10,15 +10,13 @@ class View {
         this.projectsDiv.textContent = 'Projects'
         this.addProjectButton = this.createElement('button', 'add-button');
         this.addProjectButton.textContent = 'Add';
-        this.projectList = this.createElement('ul')
-        this.displayProjects([]);
+        this.projectList = this.createElement('ul', 'project-list')
 
         this.todosDiv = this.createElement('div', 'todos');
         this.todosDiv.textContent = 'Todos';
         this.addTodoButton = this.createElement('button', 'add-button');
         this.addTodoButton.textContent = 'Add';
-        this.todosList = this.createElement('ol');
-        this.displayTodos([]);
+        this.todosList = this.createElement('ol', 'todo-list');
 
         this.content.appendChild(this.title);
         this.projectsDiv.appendChild(this.addProjectButton);
@@ -35,9 +33,34 @@ class View {
         }
 
         if (projects.length == 0) {
-            const defaultProject = this.createElement('li');
-            defaultProject.textContent = 'Default';
-            this.projectList.appendChild(defaultProject);
+            const listItem = this.createElement('li', 'project');
+            listItem.textContent = 'Default';
+
+            const deleteButton = this.createElement('button', 'delete');
+            deleteButton.textContent = 'Delete';
+
+            listItem.append(deleteButton);
+            this.displayTodos([]);
+            this.projectList.appendChild(listItem);
+        } else {
+            projects.forEach(project => {
+                const listItem = this.createElement('li');
+                const projectButton = this.createElement('button', 'project');
+                listItem.id = project.id;
+                projectButton.textContent = project.title;
+                listItem.appendChild(projectButton);
+
+                const deleteButton = this.createElement('button', 'delete');
+                deleteButton.textContent = 'Delete';
+
+                projectButton.addEventListener('click', () => {
+                    this.displayTodos(project.todos);
+                });
+
+                listItem.append(deleteButton);
+
+                this.projectList.appendChild(listItem);
+            });
         }
     }
 
@@ -47,9 +70,32 @@ class View {
         }
 
         if (todos.length == 0) {
-            const defaultTodo = this.createElement('li');
+            const listItem = this.createElement('li');
+            const defaultTodo = this.createElement('button', 'todo')
             defaultTodo.textContent = 'Default Todo';
-            this.todosList.appendChild(defaultTodo);
+            listItem.appendChild(defaultTodo);
+
+            const deleteButton = this.createElement('button', 'delete');
+            deleteButton.textContent = 'Delete';
+            listItem.append(deleteButton);
+
+            this.todosList.append(listItem);
+        } else {
+            todos.forEach(todo => {
+                const listItem = this.createElement('li');
+                listItem.id = todo.id;
+
+                const checkbox = this.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = todo.complete;
+                listItem.textContent = todo.textContent;
+
+                const deleteButton = this.createElement('button', 'delete');
+                deleteButton.textContent = 'Delete';
+                listItem.append(deleteButton);
+
+                this.todosList.append(listItem);
+            });
         }
     }
 

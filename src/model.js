@@ -5,6 +5,7 @@ class Model {
         this.projects = [];
     }
 
+
     addProject(title, description) {
         const projectId = this.projects.length > 0 ? this.projects[this.projects.length - 1].id + 1 : 1;
         const newProject = new Project(projectId, title, description);
