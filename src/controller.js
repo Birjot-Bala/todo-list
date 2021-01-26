@@ -6,13 +6,27 @@ class Controller {
 
         this.subscribe('delete-project', this.model.deleteProject.bind(this.model));
         this.subscribe('add-project', this.model.addProject.bind(this.model));
-        this.subscribe('update-projects', this.view.displayProjects.bind(this.view));
+
+
+        this.subscribe('delete-todo', this.model.deleteTodoInProject.bind(this.model));
+        this.subscribe('add-todo', this.model.addTodoToProject.bind(this.model));
+        this.subscribe('toggle-todo', this.model.toggleTodoInProject.bind(this.model));
         
         this.view.displayProjects(this.model.projects);
 
+        this.subscribe('update-projects', this.view.displayProjects.bind(this.view));
+        this.subscribe('update-todos', this.view.displayTodos.bind(this.view));
+
+        this.model.bindProjectListChanged(this.publish.bind(this, 'update-projects'));
+        this.model.bindTodoListChanged(this.publish.bind(this, 'update-todos'));
+
         this.view.bindDeleteProject(this.publish.bind(this, 'delete-project'));
         this.view.bindAddProject(this.publish.bind(this, 'add-project'));
-        this.model.bindProjectListChanged(this.publish.bind(this));
+
+        this.view.bindAddTodoToProject(this.publish.bind(this, 'add-todo'));
+        this.view.bindDeleteTodoInProject(this.publish.bind(this, 'delete-todo'));
+        this.view.bindToggleTodoInProject(this.publish.bind(this, 'toggle-todo'));
+
 
     }
 

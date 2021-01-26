@@ -40,7 +40,7 @@ class View {
             deleteButton.textContent = 'Delete';
 
             listItem.append(deleteButton);
-            this.displayTodos([]);
+            this.displayTodos(0 ,[]);
             this.projectList.appendChild(listItem);
         } else {
             projects.forEach(project => {
@@ -54,7 +54,7 @@ class View {
                 deleteButton.textContent = 'Delete';
 
                 projectButton.addEventListener('click', () => {
-                    this.displayTodos(project.todos);
+                    this.displayTodos(project.id, project.todos);
                 });
 
                 listItem.append(deleteButton);
@@ -64,31 +64,28 @@ class View {
         }
     }
 
-    displayTodos(todos) {
+    displayTodos(projectId, todos) {
         while (this.todosList.firstChild) {
             this.todosList.removeChild(this.todosList.firstChild);
         }
 
+        this.todosList.id = 'p' + projectId; 
+
         if (todos.length == 0) {
-            const listItem = this.createElement('li');
-            const defaultTodo = this.createElement('button', 'todo')
-            defaultTodo.textContent = 'Default Todo';
-            listItem.appendChild(defaultTodo);
+            const defaultTodo = this.createElement('p', 'todo')
+            defaultTodo.textContent = 'Get started by adding a Todo!';
 
-            const deleteButton = this.createElement('button', 'delete');
-            deleteButton.textContent = 'Delete';
-            listItem.append(deleteButton);
-
-            this.todosList.append(listItem);
+            this.todosList.append(defaultTodo);
         } else {
             todos.forEach(todo => {
                 const listItem = this.createElement('li');
-                listItem.id = todo.id;
+                listItem.id = projectId + '.' + todo.id;
 
-                const checkbox = this.createElement('input');
+                const checkbox = this.createElement('input', 'complete');
                 checkbox.type = 'checkbox';
                 checkbox.checked = todo.complete;
-                listItem.textContent = todo.textContent;
+                listItem.textContent = todo.title;
+                listItem.append(checkbox);
 
                 const deleteButton = this.createElement('button', 'delete');
                 deleteButton.textContent = 'Delete';
@@ -107,9 +104,9 @@ class View {
     }
 
     bindDeleteProject(callback) {
-        this.projectList.addEventListener('click', event => {
-            if (event.target.className === 'delete') {
-                const projectId = parseInt(event.target.parentElement.id)
+        this.projectList.addEventListener('click', e => {
+            if (e.target.className === 'delete') {
+                const projectId = parseInt(e.target.parentElement.id)
                 callback(projectId);
             }
         });
@@ -118,6 +115,31 @@ class View {
     bindAddProject(callback) {
         this.addProjectButton.addEventListener('click', () => {
             callback('Test title', 'test desc');
+        });
+    }
+
+    bindAddTodoToProject(callback) {
+        this.addTodoButton.addEventListener('click', e => {
+            const projectId = parseInt(e.target.nextSibling.id.slice(1)); 
+            callback(projectId, 'title', 'description', 'dueDate', 'priority');
+        });
+    }
+
+    bindDeleteTodoInProject(callback) {
+        this.todosList.addEventListener('click', e => {
+            if (e.target.className === 'delete') {
+                const ids = e.target.parentElement.id.split('.');
+                callback(parseInt(ids[0]), parseInt(ids[1]));
+            }
+        });
+    }
+
+    bindToggleTodoInProject(callback) {
+        this.todosList.addEventListener('input', e => {
+            if (e.target.className === 'complete') {
+                const ids = e.target.parentElement.id.split('.');
+                callback(parseInt(ids[0]), parseInt(ids[1]));
+            }
         });
     }
 }

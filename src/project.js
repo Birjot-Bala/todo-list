@@ -31,9 +31,8 @@ class Project {
     }
 
     toggleTodo(todoId) {
-        this.todos = this.todos.map(todo => 
-            todo.id === todoId ? todo.toggleComplete() : todo
-        );
+        const todoToToggle = this.todos.filter(todo => todo.id === todoId)[0];
+        todoToToggle.toggleComplete();
     }
 }
 
