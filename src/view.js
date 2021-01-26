@@ -29,7 +29,7 @@ class View {
 
     displayProjects(projects) {
         while (this.projectList.firstChild) {
-            this.projectList.removeChild(projectList.firstChild);
+            this.projectList.removeChild(this.projectList.firstChild);
         }
 
         if (projects.length == 0) {
@@ -66,7 +66,7 @@ class View {
 
     displayTodos(todos) {
         while (this.todosList.firstChild) {
-            this.todosList.removeChild(todosList.firstChild);
+            this.todosList.removeChild(this.todosList.firstChild);
         }
 
         if (todos.length == 0) {
@@ -104,6 +104,21 @@ class View {
         if (className) element.classList.add(className);
 
         return element;
+    }
+
+    bindDeleteProject(callback) {
+        this.projectList.addEventListener('click', event => {
+            if (event.target.className === 'delete') {
+                const projectId = parseInt(event.target.parentElement.id)
+                callback(projectId);
+            }
+        });
+    }
+
+    bindAddProject(callback) {
+        this.addProjectButton.addEventListener('click', () => {
+            callback('Test title', 'test desc');
+        });
     }
 }
 
