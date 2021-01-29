@@ -32,26 +32,25 @@ class View {
             this.projectList.removeChild(this.projectList.firstChild);
         }
 
-        projects.forEach(project => {
+        projects.forEach((project, i) => {
             const listItem = this.createElement('li');
             const projectButton = this.createElement('button', 'project');
             listItem.id = project.id;
             projectButton.textContent = project.title;
             listItem.appendChild(projectButton);
 
-            const deleteButton = this.createElement('button', 'delete');
-            deleteButton.textContent = 'Delete';
-
             projectButton.addEventListener('click', () => {
                 this.displayTodos(project.id, project.todos);
+                this.addTodoButton.disabled = false;
             });
-
-            listItem.append(deleteButton);
+            if (i != 0) {
+                const deleteButton = this.createElement('button', 'delete');
+                deleteButton.textContent = 'Delete';
+                listItem.append(deleteButton);
+            }
 
             this.projectList.appendChild(listItem);
         });
-
-        // this.displayTodos(0, projects[0].todos) // Display initial
     }
 
     displayTodos(projectId, todos) {
@@ -97,6 +96,17 @@ class View {
         this.projectList.addEventListener('click', e => {
             if (e.target.className === 'delete') {
                 const projectId = parseInt(e.target.parentElement.id)
+                const todosListId = parseInt(this.todosList.id.slice(1));
+                if (projectId === todosListId) {
+                    while (this.todosList.firstChild) {
+                        this.todosList.removeChild(this.todosList.firstChild);
+                    }
+                    this.addTodoButton.disabled = true;
+                    const message = this.createElement('p', 'todo');
+                    message.textContent = 'No project selected';
+        
+                    this.todosList.append(message);
+                }
                 callback(projectId);
             }
         });
@@ -110,8 +120,8 @@ class View {
 
     bindAddTodoToProject(callback) {
         this.addTodoButton.addEventListener('click', e => {
-            const projectId = parseInt(e.target.nextSibling.id.slice(1)); 
-            callback(projectId, 'title', 'description', 'dueDate', 'priority');
+            const projectId = parseInt(e.target.nextSibling.id.slice(1));
+            callback(projectId, 'title', 'description', 'dueDate', 'priority', false);
         });
     }
 

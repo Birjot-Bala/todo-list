@@ -35,9 +35,9 @@ class Model {
         this.onProjectListChanged(this.projects);
     }
 
-    addTodoToProject(projectId, title, description, dueDate, priority) {
+    addTodoToProject(projectId, title, description, dueDate, priority, complete) {
         const project = this.projects.filter(project => project.id === projectId)[0];
-        project.addTodo(title, description, dueDate, priority);
+        project.addTodo(title, description, dueDate, priority, complete);
         this.populateStorage();
         this.onTodoListChanged(project.id, project.todos);
     }
@@ -83,7 +83,6 @@ class Model {
             );
             if (project.todos.length != 0) {
                 project.todos.forEach(todo => {
-                    console.log(todo);
                     builtProject.addTodo(
                         todo.title,
                         todo.description,

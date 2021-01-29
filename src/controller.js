@@ -27,6 +27,7 @@ class Controller {
         this.view.bindToggleTodoInProject(this.publish.bind(this, 'toggle-todo'));
 
         this.view.displayProjects(this.model.projects);
+        this.view.displayTodos(this.model.projects[0].id, this.model.projects[0].todos);
     }
 
     publish(eventName, ...data) {
