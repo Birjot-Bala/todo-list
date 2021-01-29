@@ -9,16 +9,16 @@ class View {
         this.projectsDiv = this.createElement('div', 'projects');
         this.projectsDiv.textContent = 'Projects'
         this.addProjectButton = this.createElement('button', 'add-button');
-        this.addProjectButton.textContent = 'Add';
+        this.addProjectButton.appendChild(this._createAddIcon());
         this.projectList = this.createElement('ul', 'project-list')
 
         this.todosDiv = this.createElement('div', 'todos');
         this.todosDiv.textContent = 'Todos';
         this.addTodoButton = this.createElement('button', 'add-button');
-        this.addTodoButton.textContent = 'Add';
+        this.addTodoButton.appendChild(this._createAddIcon());
         this.todosList = this.createElement('ol', 'todo-list');
 
-        this.content.appendChild(this.title);
+        this.content.parentNode.insertBefore(this.title, this.content);
         this.projectsDiv.appendChild(this.addProjectButton);
         this.projectsDiv.appendChild(this.projectList);
         this.todosDiv.appendChild(this.addTodoButton);
@@ -45,7 +45,7 @@ class View {
             });
             if (i != 0) {
                 const deleteButton = this.createElement('button', 'delete');
-                deleteButton.textContent = 'Delete';
+                deleteButton.appendChild(this._createDeleteIcon());
                 listItem.append(deleteButton);
             }
 
@@ -77,7 +77,7 @@ class View {
                 listItem.append(checkbox);
 
                 const deleteButton = this.createElement('button', 'delete');
-                deleteButton.textContent = 'Delete';
+                deleteButton.appendChild(this._createDeleteIcon());
                 listItem.append(deleteButton);
 
                 this.todosList.append(listItem);
@@ -141,6 +141,20 @@ class View {
                 callback(parseInt(ids[0]), parseInt(ids[1]));
             }
         });
+    }
+
+    _createAddIcon() {
+        const addIcon = this.createElement('span', 'material-icons');
+        addIcon.textContent = 'add';
+
+        return addIcon;
+    }
+
+    _createDeleteIcon() {
+        const deleteIcon = this.createElement('span', 'material-icons');
+        deleteIcon.textContent = 'delete';
+
+        return deleteIcon;
     }
 }
 
