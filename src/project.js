@@ -8,14 +8,15 @@ class Project {
         this.todos = [];
     }
 
-    addTodo(title, description, dueDate, priority) {
+    addTodo(title, description, dueDate, priority, complete) {
         const todoId = this.todos.length > 0 ? this.todos[this.todos.length - 1].id + 1: 1;
         const newTodo = new Todo(
             todoId,
             title, 
             description, 
             dueDate, 
-            priority
+            priority,
+            complete
         );
         this.todos.push(newTodo);
     }

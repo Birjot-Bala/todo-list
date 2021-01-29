@@ -11,8 +11,7 @@ class Controller {
         this.subscribe('delete-todo', this.model.deleteTodoInProject.bind(this.model));
         this.subscribe('add-todo', this.model.addTodoToProject.bind(this.model));
         this.subscribe('toggle-todo', this.model.toggleTodoInProject.bind(this.model));
-        
-        this.view.displayProjects(this.model.projects);
+    
 
         this.subscribe('update-projects', this.view.displayProjects.bind(this.view));
         this.subscribe('update-todos', this.view.displayTodos.bind(this.view));
@@ -27,7 +26,7 @@ class Controller {
         this.view.bindDeleteTodoInProject(this.publish.bind(this, 'delete-todo'));
         this.view.bindToggleTodoInProject(this.publish.bind(this, 'toggle-todo'));
 
-
+        this.view.displayProjects(this.model.projects);
     }
 
     publish(eventName, ...data) {

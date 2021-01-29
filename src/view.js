@@ -32,36 +32,26 @@ class View {
             this.projectList.removeChild(this.projectList.firstChild);
         }
 
-        if (projects.length == 0) {
-            const listItem = this.createElement('li', 'project');
-            listItem.textContent = 'Default';
+        projects.forEach(project => {
+            const listItem = this.createElement('li');
+            const projectButton = this.createElement('button', 'project');
+            listItem.id = project.id;
+            projectButton.textContent = project.title;
+            listItem.appendChild(projectButton);
 
             const deleteButton = this.createElement('button', 'delete');
             deleteButton.textContent = 'Delete';
 
-            listItem.append(deleteButton);
-            this.displayTodos(0 ,[]);
-            this.projectList.appendChild(listItem);
-        } else {
-            projects.forEach(project => {
-                const listItem = this.createElement('li');
-                const projectButton = this.createElement('button', 'project');
-                listItem.id = project.id;
-                projectButton.textContent = project.title;
-                listItem.appendChild(projectButton);
-
-                const deleteButton = this.createElement('button', 'delete');
-                deleteButton.textContent = 'Delete';
-
-                projectButton.addEventListener('click', () => {
-                    this.displayTodos(project.id, project.todos);
-                });
-
-                listItem.append(deleteButton);
-
-                this.projectList.appendChild(listItem);
+            projectButton.addEventListener('click', () => {
+                this.displayTodos(project.id, project.todos);
             });
-        }
+
+            listItem.append(deleteButton);
+
+            this.projectList.appendChild(listItem);
+        });
+
+        // this.displayTodos(0, projects[0].todos) // Display initial
     }
 
     displayTodos(projectId, todos) {
@@ -72,7 +62,7 @@ class View {
         this.todosList.id = 'p' + projectId; 
 
         if (todos.length == 0) {
-            const defaultTodo = this.createElement('p', 'todo')
+            const defaultTodo = this.createElement('p', 'todo');
             defaultTodo.textContent = 'Get started by adding a Todo!';
 
             this.todosList.append(defaultTodo);
