@@ -22,11 +22,19 @@ button > * {
     flex-direction: column;
     align-items: center;
     flex: 0 1 auto;
+    border-right: solid black;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .project-list {
     list-style-type: none;
     padding-left: 0;
+}
+
+.project-list li {
+    display: flex;
+    padding-bottom: 8px;
 }
 
 .add-button {
@@ -52,6 +60,21 @@ button > * {
 .todos {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     flex: 2 1 auto;
+    text-align: center;
+}
+
+.todo-list {
+    list-style-position: inside;
+    text-align: left;
+}
+
+.todo-list-item {
+    display: inline-flex;
+    align-items: center;
+}
+
+.complete {
+    margin-left: 8px;
 }

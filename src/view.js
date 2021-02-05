@@ -68,17 +68,26 @@ class View {
         } else {
             todos.forEach(todo => {
                 const listItem = this.createElement('li');
+                const itemSpan = this.createElement('span');
+
                 listItem.id = projectId + '.' + todo.id;
+
+                itemSpan.classList.add('todo-list-item');
 
                 const checkbox = this.createElement('input', 'complete');
                 checkbox.type = 'checkbox';
                 checkbox.checked = todo.complete;
-                listItem.textContent = todo.title;
-                listItem.append(checkbox);
+                if (todo.complete) {
+                    itemSpan.style.textDecorationLine = 'line-through';
+                }
+                itemSpan.textContent = todo.title;
+                itemSpan.append(checkbox);
 
                 const deleteButton = this.createElement('button', 'delete');
                 deleteButton.appendChild(this._createDeleteIcon());
-                listItem.append(deleteButton);
+                itemSpan.append(deleteButton);
+                
+                listItem.append(itemSpan);
 
                 this.todosList.append(listItem);
             });
@@ -120,7 +129,9 @@ class View {
 
     bindAddTodoToProject(callback) {
         this.addTodoButton.addEventListener('click', e => {
-            const projectId = parseInt(e.target.nextSibling.id.slice(1));
+            const projectId = parseInt(
+                e.target.nextSibling.id.slice(1)
+            );
             callback(projectId, 'title', 'description', 'dueDate', 'priority', false);
         });
     }
@@ -128,7 +139,7 @@ class View {
     bindDeleteTodoInProject(callback) {
         this.todosList.addEventListener('click', e => {
             if (e.target.className === 'delete') {
-                const ids = e.target.parentElement.id.split('.');
+                const ids = e.target.parentElement.parentElement.id.split('.');
                 callback(parseInt(ids[0]), parseInt(ids[1]));
             }
         });
@@ -137,7 +148,7 @@ class View {
     bindToggleTodoInProject(callback) {
         this.todosList.addEventListener('input', e => {
             if (e.target.className === 'complete') {
-                const ids = e.target.parentElement.id.split('.');
+                const ids = e.target.parentElement.parentElement.id.split('.');
                 callback(parseInt(ids[0]), parseInt(ids[1]));
             }
         });
