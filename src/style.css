@@ -6,6 +6,7 @@ body {
 h1 {
     border: 5px solid black;
     padding: 5px;
+    margin: 0;
 }
 
 button > * {
@@ -19,8 +20,9 @@ button > * {
 
 .projects {
     display: flex;
+    text-align: center;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     flex: 0 1 auto;
     border-right: solid black;
     padding-left: 8px;
@@ -38,9 +40,21 @@ button > * {
 }
 
 .add-button {
-    border-style: none;
-    background-color:transparent;
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 3px;
     cursor: pointer;
+    align-self: center;
+    display: inline-flex;
+    font-size: medium;
+}
+
+.add-button span {
+    padding-left: 8px;
+}
+
+.add-button:hover {
+    background-color: rgb(228, 226, 226);
 }
 
 .delete {
@@ -54,7 +68,11 @@ button > * {
     background-color: transparent;
     border-radius: 3px;
     cursor: pointer;
-    height: 2em;
+    font-size: medium;
+}
+
+.project:hover {
+    background-color:rgb(228, 226, 226);
 }
 
 .todos {
@@ -67,14 +85,21 @@ button > * {
 
 .todo-list {
     list-style-position: inside;
+    list-style-type: none;
     text-align: left;
 }
 
 .todo-list-item {
     display: inline-flex;
     align-items: center;
+    padding-bottom: 8px;
 }
 
 .complete {
-    margin-left: 8px;
+    margin-right: 16px;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: grey;
 }

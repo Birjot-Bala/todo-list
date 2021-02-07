@@ -4,23 +4,28 @@ class View {
         this.content = this.doc.querySelector('#content');
 
         this.title = this.createElement('h1');
-        this.title.textContent = 'Todos Title';
+        this.title.textContent = 'Todo List';
 
         this.projectsDiv = this.createElement('div', 'projects');
-        this.projectsDiv.textContent = 'Projects'
+        this.projectsHeader = this.createElement('h2');
+        this.projectsHeader.textContent = 'Projects'
         this.addProjectButton = this.createElement('button', 'add-button');
+        this.addProjectButton.textContent = 'Add Project';
         this.addProjectButton.appendChild(this._createAddIcon());
         this.projectList = this.createElement('ul', 'project-list')
 
         this.todosDiv = this.createElement('div', 'todos');
-        this.todosDiv.textContent = 'Todos';
+        this.todosHeader = this.createElement('h2');
+        this.todosHeader.textContent = 'Todos';
         this.addTodoButton = this.createElement('button', 'add-button');
+        this.addTodoButton.textContent = 'Add Todo';
         this.addTodoButton.appendChild(this._createAddIcon());
         this.todosList = this.createElement('ol', 'todo-list');
 
         this.content.parentNode.insertBefore(this.title, this.content);
-        this.projectsDiv.appendChild(this.addProjectButton);
+        this.projectsDiv.appendChild(this.projectsHeader)
         this.projectsDiv.appendChild(this.projectList);
+        this.todosDiv.appendChild(this.todosHeader)
         this.todosDiv.appendChild(this.addTodoButton);
         this.todosDiv.appendChild(this.todosList);
         this.content.appendChild(this.projectsDiv);
@@ -51,6 +56,8 @@ class View {
 
             this.projectList.appendChild(listItem);
         });
+
+        this.projectList.appendChild(this.addProjectButton);
     }
 
     displayTodos(projectId, todos) {
@@ -60,38 +67,37 @@ class View {
 
         this.todosList.id = 'p' + projectId; 
 
-        if (todos.length == 0) {
-            const defaultTodo = this.createElement('p', 'todo');
-            defaultTodo.textContent = 'Get started by adding a Todo!';
+        todos.forEach(todo => {
+            const listItem = this.createElement('li');
+            const itemDiv = this.createElement('div');
+            const itemText = this.createElement('span');
 
-            this.todosList.append(defaultTodo);
-        } else {
-            todos.forEach(todo => {
-                const listItem = this.createElement('li');
-                const itemSpan = this.createElement('span');
+            listItem.id = projectId + '.' + todo.id;
 
-                listItem.id = projectId + '.' + todo.id;
+            itemDiv.classList.add('todo-list-item');
 
-                itemSpan.classList.add('todo-list-item');
+            const checkbox = this.createElement('input', 'complete');
+            checkbox.type = 'checkbox';
+            checkbox.checked = todo.complete;
+            if (todo.complete) {
+                itemText.classList.add('completed');
 
-                const checkbox = this.createElement('input', 'complete');
-                checkbox.type = 'checkbox';
-                checkbox.checked = todo.complete;
-                if (todo.complete) {
-                    itemSpan.style.textDecorationLine = 'line-through';
-                }
-                itemSpan.textContent = todo.title;
-                itemSpan.append(checkbox);
+            }
 
-                const deleteButton = this.createElement('button', 'delete');
-                deleteButton.appendChild(this._createDeleteIcon());
-                itemSpan.append(deleteButton);
-                
-                listItem.append(itemSpan);
+            itemText.textContent = todo.title;
 
-                this.todosList.append(listItem);
-            });
-        }
+            itemDiv.append(checkbox);
+            itemDiv.append(itemText);
+
+            const deleteButton = this.createElement('button', 'delete');
+            deleteButton.appendChild(this._createDeleteIcon());
+            itemDiv.append(deleteButton);
+
+            listItem.append(itemDiv);
+
+            this.todosList.append(listItem);
+        });
+        this.todosList.append(this.addTodoButton);
     }
 
     createElement(tag, className) {
@@ -130,7 +136,7 @@ class View {
     bindAddTodoToProject(callback) {
         this.addTodoButton.addEventListener('click', e => {
             const projectId = parseInt(
-                e.target.nextSibling.id.slice(1)
+                e.target.parentElement.id.slice(1)
             );
             callback(projectId, 'title', 'description', 'dueDate', 'priority', false);
         });
