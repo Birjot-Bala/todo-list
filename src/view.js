@@ -16,7 +16,7 @@ class View {
 
         this.todosDiv = this.createElement('div', 'todos');
         this.todosHeader = this.createElement('h2');
-        this.todosHeader.textContent = 'Todos';
+        this.todosHeader.textContent = 'Default';
         this.addTodoButton = this.createElement('button', 'add-button');
         this.addTodoButton.textContent = 'Add Todo';
         this.addTodoButton.appendChild(this._createAddIcon());
@@ -45,6 +45,7 @@ class View {
             listItem.appendChild(projectButton);
 
             projectButton.addEventListener('click', () => {
+                this.todosHeader.textContent = project.title;
                 this.displayTodos(project.id, project.todos);
                 this.addTodoButton.disabled = false;
             });
@@ -118,6 +119,7 @@ class View {
                     }
                     this.addTodoButton.disabled = true;
                     const message = this.createElement('p', 'todo');
+                    this.todosHeader.textContent = 'Select a Project';
                     message.textContent = 'No project selected';
         
                     this.todosList.append(message);
@@ -129,7 +131,10 @@ class View {
 
     bindAddProject(callback) {
         this.addProjectButton.addEventListener('click', () => {
-            callback('Test title', 'test desc');
+            this.projectList.removeChild(this.addProjectButton);
+            this.projectList.appendChild(this._createProjectForm(callback));
+
+            // callback('Test title', 'test desc');
         });
     }
 
@@ -169,9 +174,45 @@ class View {
 
     _createDeleteIcon() {
         const deleteIcon = this.createElement('span', 'material-icons');
-        deleteIcon.textContent = 'delete';
+        deleteIcon.textContent = 'clear';
 
         return deleteIcon;
+    }
+
+    _createProjectForm(callback) {
+        const inputField = this.createElement('input');
+        inputField.type = 'text';
+        inputField.id = 'project-input';
+        inputField.required = true;
+        inputField.size = '13';
+
+        const checkmark = this.createElement('button', 'material-icons');
+        checkmark.textContent = 'done';
+        checkmark.addEventListener('click', () => {
+            if (inputField.value.length > 1) {
+                this.projectList.removeChild(formDiv);
+                this.projectList.append(this.addProjectButton);
+                callback(inputField.value, '');
+            } else {
+                window.alert('Project title cannot be empty');
+            }
+        });
+
+        const cross = this.createElement('button', 'material-icons');
+        cross.textContent = 'clear'
+        cross.addEventListener('click', () => {
+            this.projectList.removeChild(formDiv);
+            this.projectList.append(this.addProjectButton);
+        });
+
+        const formDiv = this.createElement('div');
+        formDiv.classList.add('project-form');
+
+        formDiv.appendChild(inputField);
+        formDiv.appendChild(checkmark);
+        formDiv.appendChild(cross);
+
+        return formDiv;
     }
 }
 

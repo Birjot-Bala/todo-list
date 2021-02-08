@@ -1,6 +1,6 @@
 body {
     font-family: 'Open Sans', sans-serif;
-
+    margin: 0;
 }
 
 h1 {
@@ -20,13 +20,12 @@ button > * {
 
 .projects {
     display: flex;
-    text-align: center;
     flex-direction: column;
-    align-items: left;
     flex: 0 1 auto;
     border-right: solid black;
     padding-left: 8px;
     padding-right: 8px;
+    width: 250px;
 }
 
 .project-list {
@@ -37,6 +36,23 @@ button > * {
 .project-list li {
     display: flex;
     padding-bottom: 8px;
+    justify-content: space-between;
+}
+
+.project-form {
+    display: flex;
+}
+
+.project-form button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#project-input {
+    font-size: medium;
+    padding-left: 4px;
+    margin-right: 4px;
 }
 
 .add-button {
@@ -60,11 +76,19 @@ button > * {
 .delete {
     border-style: none;
     background-color: transparent;
+    padding-top: 4px;
     cursor: pointer;
+    color: lightgray;
+}
+
+.delete:hover {
+    color: black;
 }
 
 .project {
-    border: 1px solid black;
+    border: none;
+    text-align: left;
+    width: 100%;
     background-color: transparent;
     border-radius: 3px;
     cursor: pointer;
@@ -80,23 +104,46 @@ button > * {
     flex-direction: column;
     align-items: stretch;
     flex: 2 1 auto;
-    text-align: center;
+    text-align: left;
+}
+
+.todos h2 {
+    margin-left: 40px;
 }
 
 .todo-list {
     list-style-position: inside;
     list-style-type: none;
-    text-align: left;
+    padding-right: 40px;
+}
+
+.todo-list li {
+    border: solid 1px grey;
+    border-radius: 2px;
+    margin-bottom: 8px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.25s ease-in-out;
+}
+
+.todo-list li:hover {
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
 }
 
 .todo-list-item {
     display: inline-flex;
     align-items: center;
-    padding-bottom: 8px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.todo-list-item span {
+    width: 100%;
 }
 
 .complete {
     margin-right: 16px;
+    margin-left: 8px;
+    cursor: pointer;
 }
 
 .completed {
