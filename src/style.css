@@ -1,12 +1,17 @@
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Arial', 'Open Sans', sans-serif;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 h1 {
-    border: 5px solid black;
+    box-shadow: 0px 1px 3px lightgray;
     padding: 5px;
     margin: 0;
+    font-weight: normal;
+    text-align: center;
 }
 
 button > * {
@@ -16,16 +21,23 @@ button > * {
 #content {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    flex-grow: 1;
 }
 
 .projects {
     display: flex;
     flex-direction: column;
     flex: 0 1 auto;
-    border-right: solid black;
-    padding-left: 8px;
+    border-right: 1px solid lightgray;
+    padding-left: 16px;
     padding-right: 8px;
     width: 250px;
+}
+
+.projects h2 {
+    font-weight: normal;
+    margin-left: 8px;
 }
 
 .project-list {
@@ -35,7 +47,7 @@ button > * {
 
 .project-list li {
     display: flex;
-    padding-bottom: 8px;
+    padding-bottom: 12px;
     justify-content: space-between;
 }
 
@@ -56,11 +68,10 @@ button > * {
 }
 
 .add-button {
-    border: 1px solid black;
+    border: 1px solid lightgray;
     background-color: white;
     border-radius: 3px;
     cursor: pointer;
-    align-self: center;
     display: inline-flex;
     font-size: medium;
 }
@@ -105,10 +116,12 @@ button > * {
     align-items: stretch;
     flex: 2 1 auto;
     text-align: left;
+    max-width: 800px;
 }
 
 .todos h2 {
     margin-left: 40px;
+    font-weight: normal;
 }
 
 .todo-list {
@@ -118,15 +131,15 @@ button > * {
 }
 
 .todo-list li {
-    border: solid 1px grey;
+    border: solid 1px lightgrey;
     border-radius: 2px;
-    margin-bottom: 8px;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.25s ease-in-out;
 }
 
 .todo-list li:hover {
-    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.3);
 }
 
 .todo-list-item {
