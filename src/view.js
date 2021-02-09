@@ -45,6 +45,13 @@ class View {
             listItem.appendChild(projectButton);
 
             projectButton.addEventListener('click', () => {
+                for (let i = 0; i < this.projectList.children.length; i++) {
+                    const child = this.projectList.children[i];
+                    if (child.classList.contains('selected-project')) {
+                        child.classList.remove('selected-project');
+                    }
+                }
+                listItem.classList.add('selected-project');
                 this.todosHeader.textContent = project.title;
                 this.displayTodos(project.id, project.todos);
                 this.addTodoButton.disabled = false;
@@ -53,7 +60,7 @@ class View {
                 const deleteButton = this.createElement('button', 'delete');
                 deleteButton.appendChild(this._createDeleteIcon());
                 listItem.append(deleteButton);
-            }
+            } 
 
             this.projectList.appendChild(listItem);
         });
