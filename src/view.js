@@ -37,6 +37,8 @@ class View {
             this.projectList.removeChild(this.projectList.firstChild);
         }
 
+        const todosListId = parseInt(this.todosList.id.slice(1));
+
         projects.forEach((project, i) => {
             const listItem = this.createElement('li');
             const projectButton = this.createElement('button', 'project');
@@ -60,7 +62,11 @@ class View {
                 const deleteButton = this.createElement('button', 'delete');
                 deleteButton.appendChild(this._createDeleteIcon());
                 listItem.append(deleteButton);
-            } 
+            }
+
+            if (project.id == todosListId) {
+                listItem.classList.add('selected-project');
+            }
 
             this.projectList.appendChild(listItem);
         });
@@ -140,8 +146,6 @@ class View {
         this.addProjectButton.addEventListener('click', () => {
             this.projectList.removeChild(this.addProjectButton);
             this.projectList.appendChild(this._createProjectForm(callback));
-
-            // callback('Test title', 'test desc');
         });
     }
 
@@ -197,8 +201,6 @@ class View {
         checkmark.textContent = 'done';
         checkmark.addEventListener('click', () => {
             if (inputField.value.length > 1) {
-                this.projectList.removeChild(formDiv);
-                this.projectList.append(this.addProjectButton);
                 callback(inputField.value, '');
             } else {
                 window.alert('Project title cannot be empty');
