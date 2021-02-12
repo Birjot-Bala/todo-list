@@ -85,23 +85,28 @@ class View {
             const listItem = this.createElement('li');
             const itemDiv = this.createElement('div');
             const itemText = this.createElement('span');
+            const itemDate = this.createElement('span');
 
             listItem.id = projectId + '.' + todo.id;
 
             itemDiv.classList.add('todo-list-item');
+            itemText.classList.add('todo-list-item-title');
+            itemDate.classList.add('todo-list-item-date');
 
             const checkbox = this.createElement('input', 'complete');
             checkbox.type = 'checkbox';
             checkbox.checked = todo.complete;
             if (todo.complete) {
                 itemText.classList.add('completed');
-
+                itemDate.classList.add('completed');
             }
 
             itemText.textContent = todo.title;
+            itemDate.textContent = todo.dueDate;
 
             itemDiv.append(checkbox);
             itemDiv.append(itemText);
+            itemDiv.append(itemDate);
 
             const deleteButton = this.createElement('button', 'delete');
             deleteButton.appendChild(this._createDeleteIcon());
@@ -154,7 +159,8 @@ class View {
             const projectId = parseInt(
                 e.target.parentElement.id.slice(1)
             );
-            callback(projectId, 'title', 'description', 'dueDate', 'priority', false);
+            this.todosList.removeChild(this.addTodoButton);
+            this.todosList.appendChild(this._createTodoForm(projectId, callback));
         });
     }
 
@@ -223,6 +229,55 @@ class View {
 
         return formDiv;
     }
+
+    _createTodoForm(projectId, callback) {
+        const inputLabel = this.createElement('label');
+        inputLabel.htmlFor = 'todo-title';
+        inputLabel.textContent = 'Title:';
+
+        const inputField = this.createElement('input');
+        inputField.type = 'text';
+        inputField.id = 'todo-title';
+        inputField.required = true;
+        inputField.size = '30';
+
+        const dateLabel = this.createElement('label');
+        dateLabel.htmlFor = 'todo-date';
+        dateLabel.textContent = 'Due Date:';
+
+        const dateInputField = this.createElement('input');
+        dateInputField.type = 'date';
+        dateInputField.id = 'todo-date';
+
+        const checkmark = this.createElement('button', 'material-icons');
+        checkmark.textContent = 'done';
+        checkmark.addEventListener('click', () => {
+            if (inputField.value.length > 1) {
+                callback(projectId, inputField.value, 'description', dateInputField.value, 'priority', false);
+            } else {
+                window.alert('Todo title cannot be empty');
+            }
+        });
+
+        const cross = this.createElement('button', 'material-icons');
+        cross.textContent = 'clear'
+        cross.addEventListener('click', () => {
+            this.todosList.removeChild(formDiv);
+            this.todosList.append(this.addTodoButton);
+        });
+
+        const formDiv = this.createElement('div');
+        formDiv.classList.add('todo-form');
+
+        formDiv.appendChild(inputLabel);
+        formDiv.appendChild(inputField);
+        formDiv.appendChild(dateLabel);
+        formDiv.appendChild(dateInputField);
+        formDiv.appendChild(checkmark);
+        formDiv.appendChild(cross);
+
+        return formDiv;
+    }   
 }
 
 export {
