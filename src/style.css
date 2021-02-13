@@ -74,6 +74,7 @@ button > * {
     cursor: pointer;
     display: inline-flex;
     font-size: medium;
+    align-items: center;
 }
 
 .add-button span {
@@ -146,7 +147,7 @@ button > * {
 }
 
 .todo-list-item-title {
-    width: 100%;
+    flex-grow: 1;
 }
 
 .todo-form {
