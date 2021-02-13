@@ -5,12 +5,19 @@ class Model {
         if (localStorage.getItem('projects')) {
             this.projects = this.rebuild(JSON.parse(localStorage.getItem('projects')));
             if (this.projects.length == 0) {
-                this.addProject('Default', 'The default project');
+                this._initializeProjects();
             }
         } else {
             this.projects = [];
-            this.addProject('Default', 'The default project');
+            this._initializeProjects();
         }
+    }
+
+    _initializeProjects() {
+        const projectId = this.projects.length > 0 ? this.projects[this.projects.length - 1].id + 1 : 1;
+        const newProject = new Project(projectId, 'Default', 'The default project');
+        this.projects.push(newProject);
+        this.populateStorage();
     }
 
     addProject(title, description) {
