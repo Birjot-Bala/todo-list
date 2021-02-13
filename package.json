@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Birjot-Bala/todo-list#readme",
   "devDependencies": {
     "css-loader": "^5.0.1",
+    "eslint": "^7.20.0",
     "style-loader": "^2.0.0",
     "webpack": "^5.17.0",
     "webpack-cli": "^4.4.0"
