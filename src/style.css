@@ -65,6 +65,7 @@ button > * {
     font-size: medium;
     padding-left: 4px;
     margin-right: 4px;
+    flex-grow: 1;
 }
 
 .add-button {
